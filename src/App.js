@@ -10,12 +10,18 @@ import { collection, getDocs, addDoc } from "firebase/firestore";
 import { serverTimestamp, Timestamp } from 'firebase/firestore'
 
 const firebaseConfig = {
-  apiKey: // take it from your firebase project
-  // ...another code
+  apiKey: "AIzaSyBbnvZgwcJngJeuc4Sp7vLu5RttJaIdiTE",
+  authDomain: "escuela-fd3f6.firebaseapp.com",
+  projectId: "escuela-fd3f6",
+  storageBucket: "escuela-fd3f6.appspot.com",
+  messagingSenderId: "455910900291",
+  appId: "1:455910900291:web:e218ebd38057290af00af6",
+  measurementId: "G-97CZBMW3NM"
 };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
 const db = getFirestore(app);
 
 function App() {
