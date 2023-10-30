@@ -1,13 +1,15 @@
 import logo from './logo.svg';
 import './App.css';
 
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { initializeApp } from "firebase/app";
 import firebase from 'firebase/compat/app';
 import { getAnalytics } from "firebase/analytics";
 import { getFirestore } from "firebase/firestore";
 import { collection, getDocs, addDoc } from "firebase/firestore";
 import { serverTimestamp, Timestamp } from 'firebase/firestore'
+import { useDispatch, useSelector } from 'react-redux';
+import { setDateEnd, setDateStart, setDescription, setTitle } from './slices/promotion';
 
 const firebaseConfig = {
   apiKey: "AIzaSyBbnvZgwcJngJeuc4Sp7vLu5RttJaIdiTE",
@@ -25,10 +27,8 @@ const analytics = getAnalytics(app);
 const db = getFirestore(app);
 
 function App() {
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [dateStart, setStart] = useState("");
-  const [dateEnd, setEnd] = useState("");
+  const { title, description, dateStart, dateEnd } = useSelector(state => state.promotion);
+  const dispatch = useDispatch();
 
   const onSave = async () => {
     console.log("start");
@@ -60,10 +60,10 @@ function App() {
 
   return (
     <div className="App">
-      <input placeholder="дата старта" type={"date"} value={dateStart} onChange={(e) => setStart(e.target.value)} />
-      <input placeholder="дата окончания" type={"date"} value={dateEnd} onChange={(e) => setEnd(e.target.value)} />
-      <input placeholder="Название" value={title} onChange={(e) => setTitle(e.target.value)} />
-      <input placeholder="Описание" value={description} onChange={(e) => setDescription(e.target.value)} />
+      <input placeholder="дата старта" type={"date"} value={dateStart} onChange={(e) => dispatch(setDateStart(e.target.value))} />
+      <input placeholder="дата окончания" type={"date"} value={dateEnd} onChange={(e) => dispatch(setDateEnd(e.target.value))} />
+      <input placeholder="Название" value={title} onChange={(e) => dispatch(setTitle(e.target.value))} />
+      <input placeholder="Описание" value={description} onChange={(e) => dispatch(setDescription(e.target.value))} />
       <button onClick={onSave}>SAVE</button>
     </div>
   );
